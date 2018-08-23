@@ -1,0 +1,42 @@
+version: "3.7" 
+
+networks:
+    local-net:
+        driver: bridge
+
+services:
+    nginx:
+        container_name: nginx.dev
+        build:
+            context: ./nginx
+        ports:
+            - 10000:80
+        volumes:
+            - ./blog:/www/blog
+        networks:
+            - local-net
+        tty: true
+    php:
+        container_name: php.dev
+        build:
+            context: ./php
+        ports:
+            - 9001:9000
+        networks:
+            - local-net
+        volumes:
+            - ./blog:/www/blog
+    mysql:
+        container_name: mysql.dev
+        build:
+            context: ./mysql
+        restart: always
+        ports:
+            - 33060:3306
+        networks:
+            - local-net
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+        command: --default-authentication-plugin=mysql_native_password
