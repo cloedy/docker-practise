@@ -1,5 +1,5 @@
 FROM php:7.2-fpm
-RUN apt-get update && apt-get install -y vim \
+RUN apt-get update && apt-get install -y vim ssh \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev  apt-utils \

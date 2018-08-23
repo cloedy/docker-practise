@@ -15,7 +15,6 @@ services:
             - ./blog:/www/blog
         networks:
             - local-net
-        tty: true
     php:
         container_name: php.dev
         build:
@@ -30,13 +29,22 @@ services:
         container_name: mysql.dev
         build:
             context: ./mysql
-        restart: always
+        image: mysql
         ports:
             - 33060:3306
         networks:
             - local-net
+        command: --default-authentication-plugin=mysql_native_password --skip-name-resolve
+        restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: admin
-        command: --default-authentication-plugin=mysql_native_password
+          MYSQL_ROOT_PASSWORD: admin
+    adminer:
+        image: adminer
+        container_name: adminer.dev
+        restart: always
+        ports:
+          - 8080:8080
+        networks:
+          - local-net
+        links:
+          - mysql
