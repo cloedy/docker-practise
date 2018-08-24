@@ -5,4 +5,6 @@
 docker image ls -a|awk '{if (NR != 1) {print $3}}'|xargs docker image rm -f
 
 docker container ls -a|awk '{if (NR != 1) {print $1}}'|xargs docker container rm -f
+
+docker-compose rm 
 ```
