@@ -38,6 +38,8 @@ services:
         restart: always
         environment:
           MYSQL_ROOT_PASSWORD: admin
+        volumes:
+            - ./mysql/init.d:/docker-entrypoint-initdb.d
     adminer:
         image: adminer
         container_name: adminer.dev
